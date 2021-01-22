@@ -1,0 +1,436 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    height: 100vh;
+    background:transparent url('./Illusions Of Light HD Wallpaper.jpg') no-repeat;
+    -webkit-background-size: cover;
+	-moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+}
+/* css game 2d */
+/* css modal-tetris */
+.myModal{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.1);
+    text-align: center;
+    /* align-items: center; */
+    z-index: 10000;
+}
+.modalContent_Tetris{
+    width: 800px;
+    height: 880px;
+    margin: calc(50vh - 440px) auto;
+    background-color:rgba(64, 224, 208, 0.5);
+    box-shadow: 5px 7px 10px 10px rgba(64, 224, 208, 0.5), 5px 7px 20px 10px rgba(64, 224, 208, 0.5);
+    animation: showOpacity 1s linear forwards;
+}
+/* css game tetris */
+.tetris_Header h1{
+    display: inline-block;
+    justify-content: space-around;
+    color: coral;
+    margin: 3px 0px;
+}
+.tetris_Header i{
+    float: right;
+    font-size: 26px;
+    color: coral;
+    opacity: 0.7;
+}
+.tetris_Header i:hover{
+    opacity: 1;
+    text-decoration: none;
+    cursor: pointer;
+}
+.game_Tetris_Menu{
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    font-size: 20px;
+}
+.tetris_Btn{
+    background-color: dimgray;
+    color: cyan;
+    padding: 2px 5px;
+    border: 1px yellow inset;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+.tetris_Btn:hover{
+    background-color: rgb(65, 126, 196);
+    color: rgba(137, 255, 1, 1);
+    cursor: pointer;
+}
+.tetris_Btn:focus{
+    outline: none;
+}
+.btn_Tetris_NewGame{
+    transform: translateX(-50px);
+}
+.btn_Tetris_Settings{
+    transform: translateX(-40px);
+}
+.game_Tetris_Menu .box_Score_Tetris{
+    transform: translateX(60px);
+    color: cyan;
+}
+.box_Score_Tetris .score_tetris{
+    margin-left: 5px;
+    margin-right: 5px;
+    color: rgb(224, 220, 220);
+    font-size: 20px;
+}
+#canvas_Tetris{
+    border: 1px yellow solid;
+}
+
+/* css toast message */
+#toastMessage_TetrisGame {
+    position: fixed;
+    top :32px;
+    right: 32px; /*cai vi tri xuat hien ok */
+    z-index: 500;
+}
+.toastMessage{
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 2px;
+    min-width: 400px;
+    max-width: 450px;
+    padding: 20px 0;;
+    border-left: 4px solid;
+    border-radius: 5px;
+    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.08);
+    transform: translateX(calc(100% + 32px));
+    transition: all linear .1s;
+    font-family: 'Times New Roman';
+    height: 40px;
+    /* animation: slideInLeft ease 1s 0s, fadeOut linear 1s 3s forwards; */
+    /* animation: name duration timing-function delay iteration-count direction fill-mode; */
+}
+/* funcition slide from ? to ?*/
+@keyframes slideInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(calc(100% + 32px));
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+}
+/* lam slide tu tu mo` dan` van bien mat */
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(0);
+    }
+}
+.toast_icon{
+    font-size: 24px;
+    float: left;
+}
+.toast_icon,.toast_close{
+    padding: 0 16px;
+}
+.toast_body{
+    float: left;
+    flex-grow: 1;
+}
+.toast_title{
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    font-family: 'Times New Roman';
+}
+.toast_msg{
+    font-size: 14px;
+    color: #888;
+    margin-top: 6px;
+    line-height: 1.5;
+}
+.toast_close{
+    float: right;
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    opacity: 0.6;
+}
+.toast_close:hover{
+    opacity: 1;
+}
+.toastMessage + .toastMessage{
+    margin-top: 24px;
+}
+.toast_Success{
+    border-color: #47d864;
+}
+.toast_Success .toast_icon{
+    color: #47d864;
+}
+
+.toast_Warning{
+    border-color: #ffc021;
+}
+.toast_Warning .toast_icon{
+    color: #ffc021;
+}
+/* css lest right of tetris (show pieces) */
+.tetris_Body{
+    display: flex;
+    justify-content: center;
+    
+}
+.tetris_Body_LR{
+    width: 200px;
+    text-align: center;
+    
+}
+.tetris_ShowPiecesRight .showRight_Score{
+    color: #ffc021;
+    font-size: 14px;
+    padding: 3px 0;
+    font-family:'Times New Roman';
+    overflow: hidden;
+    overflow-y: auto;
+}
+.tetris_ShowPiecesRight .showRight_Score::-webkit-scrollbar{
+    width: 5px;
+}
+.tetris_ShowPiecesRight .showRight_Score::-webkit-scrollbar-thumb{
+    height: 30px;
+    background: #197A61;
+    border-radius: 10px;
+}
+.tetris_ShowPiecesRight .showRight_Score span{
+    line-height: 20px;
+}
+.showLeft_O{
+    display: block;
+    margin-top: 40px;
+    
+}
+.showLeft_I{
+    display: block;
+    margin-top: 40px;
+}
+.showLeft_N{
+    display: block;
+    margin-top: 40px;
+}
+.showLeft_N2{
+    display: block;
+    margin-top: 40px;
+}
+.showLeft_T{
+    display: block;
+    margin-top: 40px;
+}
+.boxShowRight{
+    width: 194px;
+    height: 200px;
+    margin-top: 18px;
+    border: 3px yellow;
+    border-style:double;
+}
+.showRight_L{
+    display: block;
+    margin-top: 40px;
+}
+.showRight_L2{
+    display: block;
+    margin-top: 40px;
+}
+/* css responsive */
+@media only screen and (max-width: 50em){
+    .boxShowRight{
+        width: auto;
+        height: 200px;
+        border: none;
+    }
+    .tetris_Body{
+        justify-content:space-around;
+    }
+}
+/* css box setting game */
+.box_Setting_Tetris{
+    width: 300px;
+    height: auto;
+    background-color: rgba(222, 184, 135, 0.8);
+    border-radius: 5px;
+    position: fixed;
+    top :120px;
+    right: calc(50% - 150px);
+    z-index: 400;
+    opacity: 1;
+    font-family: 'Times New Roman';
+}
+.box_Setting_Tetris h3{
+    margin: 10px 0 0px 0;
+    color: rgb(25, 54, 182);
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+}
+.tetris_Setting_Label{
+    width: 100%;
+    margin-bottom: 10px;
+    display: block;
+}
+.tetris_Setting_Label label{
+    position: absolute;
+    margin: 8px -35%;
+    color:mediumslateblue;
+    font-size: 16px;
+}
+.tetris_Setting_Label label:hover{
+    font-style: italic;
+    color: mediumvioletred;
+}
+.tetris_Setting_Label label input{
+    margin: 0 10px;
+}
+.boxSetting_ChangerCustomize{
+    width: calc(100% - 10px);
+    height: 0px;
+    text-align: left;
+    padding-left: 10px;
+    color: mediumvioletred;
+    font-size: 16px;
+}
+@keyframes slideDown {
+    0% {
+        opacity: 0;
+        height: 0px;
+    }
+    100% {
+        opacity: 1;
+        height: 50px;
+    }
+}
+.boxSetting_ChangerCustomize input{
+
+    margin: 0px 5px;
+    position: relative;
+    bottom: 9%;
+}
+.boxSetting_ChangerCustomize span{
+    padding-bottom: 5px;
+}
+.tetris_Setting_Btn{
+background-color: rgba(255, 127, 80, 0.5);
+margin-top: 3px;
+display: flex;
+justify-content: space-around;
+border-radius: 5px;
+}
+.tetrisDone{
+    margin-top: 3px;
+}
+.tetrisCancel{
+    margin-top: 3px;
+}
+/* css btn modal */
+.box_Btn_Location{
+    width: auto;
+    height: auto;
+    border: none;
+    z-index: 300;
+    position: fixed;
+    top: calc(100% - 240px);
+    left: 0;
+}
+.box_Btn_Location .btn_Menu_Z_Index{
+    width: auto;
+    height: auto;
+    display: block;
+    margin-bottom: 2px;
+}
+@keyframes showOpacity {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+.box_Btn_Location .btn_Menu_Z_Index:hover .box_OptionsGame{
+    
+    animation: showOpacity 1s ease-in forwards;
+    display: block;
+}
+.btn_Menu_Z_Index .menuGame_Title{
+    width: 120px;
+    height: 30px;
+    background-color: #d4f1eb;
+    color: #2C9E80;
+    font-family:'Times New Roman';
+    font-size: 20px;
+    border-top: 0px #197A61 inset;
+    border-left: 0px #197A61 inset;
+    border-right: 3px #197A61 inset;
+    border-bottom: 3px #197A61 inset;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* opacity: 0.5; */
+}
+.btn_Menu_Z_Index .menuGame_Title:hover{
+    background-color: #2C9E80;
+    color: #fff;
+    cursor: pointer;
+    transition: 1s;
+}
+.btn_Menu_Z_Index .box_OptionsGame{
+    flex-grow: column;
+    height: auto;
+    display: none;
+
+}
+.box_OptionsGame .optionsGame{
+    width: 110px;
+    height: 25px;
+    background-color: #d4f1eb;
+    color: #2C9E80;
+    font-family:'Times New Roman';
+    font-size: 16px;
+    border-top: 0px #197A61 inset;
+    border-left: 0px #197A61 inset;
+    border-right: 3px #197A61 inset;
+    border-bottom: 3px #197A61 inset;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1px 0;
+}
+.box_OptionsGame .optionsGame:hover{
+    background-color: rgba(44, 158, 128, 0.5);
+    color: #fff;
+    cursor: pointer;
+    transition: 0.5s;
+}
+/* css ket thuc game 2d */
